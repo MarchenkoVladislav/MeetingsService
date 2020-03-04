@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import ru.marchenko.model.entity.User;
 import ru.marchenko.model.repository.UsersRepo;
 
+import javax.servlet.http.HttpSession;
+
 /**
  * @author Vladislav Marchenko
  */
@@ -30,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public PrincipalExtractor principalExtractor(UsersRepo usersRepo) {
+    public PrincipalExtractor principalExtractor(UsersRepo usersRepo, HttpSession session) {
         return map -> {
             String id = (String) map.get("sub");
 
@@ -43,7 +45,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 return newUser;
             });
 
-            return usersRepo.save(user);
+            User ourUser = usersRepo.save(user);
+
+            session.setAttribute("userID", ourUser.getUserID());
+
+            return ourUser;
         };
     }
 }

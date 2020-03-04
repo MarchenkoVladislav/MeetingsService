@@ -22,8 +22,11 @@ public class Meeting {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long meetingID;
 
-    @Column(columnDefinition = "timestamp without time zone", nullable = false,name = "date")
-    private Date date;
+    @Column(columnDefinition = "timestamp without time zone", nullable = false,name = "start_time")
+    private Date startTime;
+
+    @Column(columnDefinition = "timestamp without time zone", nullable = false,name = "end_time")
+    private Date endTime;
 
     @Column(columnDefinition = "text", nullable = false,name = "description")
     private String description;
@@ -34,9 +37,10 @@ public class Meeting {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "meetingID")
     private Set<MeetingParticipant> meetingParticipants = new HashSet<>();
 
-    public Meeting(Date date, String description, MeetingStatus meetingStatus) {
-        this.date = date;
+    public Meeting(Date startTime, Date endTime, String description) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.description = description;
-        this.meetingStatus = meetingStatus;
+        this.meetingStatus = MeetingStatus.EXPECTED;
     }
 }

@@ -34,10 +34,10 @@ public class MeetingParticipant {
     @Column(columnDefinition = "character varying (20)", nullable = false,name = "participant_role")
     private ParticipantRole participantRole;
 
-    public MeetingParticipant(Meeting meetingID, User userID, ParticipantStatus participantStatus, ParticipantRole participantRole) {
+    public MeetingParticipant(Meeting meetingID, User userID, ParticipantRole participantRole) {
         this.meetingID = meetingID;
         this.userID = userID;
-        this.participantStatus = participantStatus;
+        this.participantStatus = ParticipantStatus.DOES_NOT_AGREES;
         this.participantRole = participantRole;
     }
 }
