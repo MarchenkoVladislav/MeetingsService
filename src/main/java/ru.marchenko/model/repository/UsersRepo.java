@@ -8,5 +8,5 @@ import ru.marchenko.model.entity.User;
  * @author Vladislav Marchenko
  */
 @Repository
-public interface UsersRepo extends JpaRepository<User, Long> {
+public interface UsersRepo extends JpaRepository<User, String> {
 }

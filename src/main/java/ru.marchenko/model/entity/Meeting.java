@@ -1,6 +1,7 @@
 package ru.marchenko.model.entity;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import ru.marchenko.model.enums.MeetingStatus;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Set;
  * @author Vladislav Marchenko
  */
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "meetings", schema = "meetings")
 public class Meeting {
