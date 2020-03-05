@@ -35,12 +35,8 @@ public class MeetingParticipantsService {
         meetingParticipantsRepo.save(meetingParticipant1);
     }
 
-    public boolean containsThisParticipant(Meeting meeting, User user) {
-        List<MeetingParticipant> meetingParticipants = meetingParticipantsRepo.findMeetingParticipantsByUserIDAndMeetingID(
-                user, meeting
-        );
-
-        return meetingParticipants.size() > 0;
+    public MeetingParticipant getParticipantByID(Long participantID) {
+        return meetingParticipantsRepo.getOne(participantID);
     }
 
     public boolean participantIsBisy(Meeting meeting, User user) {

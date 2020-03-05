@@ -98,6 +98,24 @@ public class MeetingsController {
         return null;
     }
 
-    
+    @DeleteMapping(value = "deleteParticipant/")
+    public MeetingParticipant deleteParticipantFromMeeting(HttpSession session, @RequestParam Long participantID) {
+        String userID = (String) session.getAttribute("userID");
+
+        if (userID != null) {
+            MeetingParticipant meetingParticipant = meetingParticipantsService.getParticipantByID(participantID);
+
+            if (meetingParticipant != null) {
+                meetingParticipantsService.deleteParticipantFromMeeting(meetingParticipant);
+                emailsService.send(meetingParticipant.getUserID().getEmail(), "Deleting from meeting", "You was deleted" +
+                        "from this meeting:\n" + meetingParticipant.getMeetingID().getDescription());
+            }
+
+            return meetingParticipant;
+        }
+        return null;
+    }
+
+
 
 }
