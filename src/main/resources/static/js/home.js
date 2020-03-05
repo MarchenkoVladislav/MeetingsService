@@ -1,0 +1,3 @@
+$('#home').on('click', function () {
+
+});
