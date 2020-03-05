@@ -37,7 +37,8 @@ public class MeetingParticipant {
     public MeetingParticipant(Meeting meetingID, User userID, ParticipantRole participantRole) {
         this.meetingID = meetingID;
         this.userID = userID;
-        this.participantStatus = ParticipantStatus.DOES_NOT_AGREES;
+        this.participantStatus = (participantRole.toString().equals("ORGANIZER")) ? ParticipantStatus.AGREES
+                : ParticipantStatus.DOES_NOT_AGREES;
         this.participantRole = participantRole;
     }
 }

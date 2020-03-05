@@ -65,4 +65,20 @@ public class MeetingParticipantsService {
 
         return false;
     }
+
+    public boolean isMeetingOrganizer(User user, Meeting meeting) {
+        List<MeetingParticipant> meetingParticipants = meetingParticipantsRepo.findMeetingParticipantsByUserIDAndMeetingID(user, meeting);
+
+        if (meetingParticipants.isEmpty()) {
+            return false;
+        }
+
+        else {
+            MeetingParticipant meetingParticipant = meetingParticipants.get(1);
+            if (meetingParticipant.getParticipantRole().toString().equals("ORGANIZER")) {
+                return true;
+            }
+            return false;
+        }
+    }
 }
