@@ -7,6 +7,7 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/my.css" crossorigin="anonymous">
 </head>
 <body>
 
@@ -23,7 +24,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#" id="my-meetings">My meetings</a>
+            <a class="nav-link" href="#" id="my-meetings">Current meetings</a>
         </li>
 
     </ul>
@@ -45,6 +46,19 @@
     </ul>
 </nav>
 
+<div class="container">
+    <div class="row-md-auto">
+        <div class="col-md-auto" id="hint">
+            <h4 class="c-h">Rules for working with the service</h4>
+            <p class="text-center">1. To use the service, you must sign in via Google. To do this, there is a button in the right corner of the navigation bar.</p>
+            <p class="text-center">2. When you click on a brand, you will be returned to this hint.</p>
+            <p class="text-center">3. The "Create meeting" tab is used to add your own meetings.</p>
+            <p class="text-center">4. The "Meetings management" tab is used to view all meetings.</p>
+            <p class="text-center">5. The "Current meetings " tab is used for editing current meetings.</p>
+            <p class="text-center">6. To sign out, click the button in the right corner again.</p>
+        </div>
+    </div>
+</div>
 
 <script th:inline="javascript">
     let signInData = [[${signInData}]];

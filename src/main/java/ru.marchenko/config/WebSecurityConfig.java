@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .mvcMatchers("/", "/static/**", "/templates/**", "/js/**").permitAll()
+                .mvcMatchers("/", "/static/**", "/templates/**", "/js/**", "/css/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout().logoutSuccessUrl("/").permitAll()
