@@ -5,11 +5,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.marchenko.model.entity.Meeting;
 import ru.marchenko.model.entity.User;
-import ru.marchenko.model.enums.MeetingStatus;
 import ru.marchenko.model.enums.ParticipantRole;
-import ru.marchenko.model.enums.ParticipantStatus;
 
-import java.util.Date;
 import java.util.List;
 
 /**

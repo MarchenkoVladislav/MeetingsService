@@ -7,7 +7,6 @@ import ru.marchenko.model.entity.Meeting;
 import ru.marchenko.model.entity.User;
 import ru.marchenko.model.enums.MeetingStatus;
 import ru.marchenko.model.enums.ParticipantRole;
-import ru.marchenko.model.enums.ParticipantStatus;
 import ru.marchenko.model.repository.MeetingsRepo;
 
 import java.util.Date;
@@ -77,6 +76,15 @@ public class MeetingsService {
         if (startTime.after(endTime) || (daysInt > validDaysInterval)
                 || (description.length() > validDescrLenMax) || (description.length() < validDescrLenMin)) {
             return false;
+        }
+
+        List<Meeting> meetings = meetingsRepo.findAll();
+
+        for (Meeting m: meetings) {
+            if ((startTime.after(m.getStartTime()) && startTime.before(m.getEndTime()))
+                    || (endTime.after(m.getStartTime()) && endTime.before(m.getEndTime()))) {
+                return false;
+            }
         }
 
         return  true;

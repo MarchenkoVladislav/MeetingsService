@@ -14,7 +14,9 @@ import ru.marchenko.service.MeetingsService;
 import ru.marchenko.service.UsersService;
 
 import javax.servlet.http.HttpSession;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -36,20 +38,21 @@ public class MeetingsController {
     @Autowired
     private UsersService usersService;
 
-    @PostMapping(value = "create/")
-    public Meeting createMeeting(HttpSession session, @RequestParam Date startTime, @RequestParam Date endTime, @RequestParam String description) {
+    DateFormat df = new SimpleDateFormat();
+
+    @PostMapping(value = "create")
+    public Meeting createMeeting(HttpSession session, @RequestParam String startTime, @RequestParam String endTime, @RequestParam String description)
+            throws ParseException {
         String userId = (String) session.getAttribute("userID");
 
-        if (meetingsService.isValidMeetingInfo(startTime, endTime, description) && userId != null) {
-            Meeting meeting = meetingsService.saveOrUpdateMeeting(new Meeting(startTime, endTime, description));
+        if (meetingsService.isValidMeetingInfo(df.parse(startTime), df.parse(endTime), description) && userId != null) {
+            Meeting meeting = meetingsService.saveOrUpdateMeeting(new Meeting(df.parse(startTime), df.parse(endTime), description));
 
             User user = usersService.getUserByID(userId);
 
-            MeetingParticipant meetingParticipant = new MeetingParticipant(meeting, user, ParticipantRole.ORGANIZER);
+            meetingParticipantsService.addParticipantToMeeting(meeting, user,ParticipantRole.ORGANIZER);
 
-            meeting.getMeetingParticipants().add(meetingParticipant);
-
-            return meetingsService.saveOrUpdateMeeting(meeting);
+            return meetingsService.getMitingByID(meeting.getMeetingID());
         }
 
         else {
@@ -81,7 +84,7 @@ public class MeetingsController {
        return null;
     }
 
-    @PutMapping(value = "addParticipant/")
+    @PutMapping(value = "addParticipant")
     public MeetingParticipant addParticipantToMeeting(HttpSession session, @RequestParam Long meetingID, @RequestParam String userID,
                                            @RequestParam ParticipantRole participantRole) {
         String userID1 = (String) session.getAttribute("userID");
@@ -100,7 +103,7 @@ public class MeetingsController {
         return null;
     }
 
-    @DeleteMapping(value = "deleteParticipant/")
+    @DeleteMapping(value = "deleteParticipant")
     public MeetingParticipant deleteParticipantFromMeeting(HttpSession session, @RequestParam Long participantID) {
         String userID = (String) session.getAttribute("userID");
 
@@ -137,7 +140,7 @@ public class MeetingsController {
         return null;
     }
 
-    @GetMapping(value = "allMeetingsByUser/")
+    @GetMapping(value = "allMeetingsByUser")
     public List<Meeting> getMeetingsByUser(@RequestParam String userID, HttpSession session) {
         String userID1 = (String) session.getAttribute("userID");
 
@@ -148,7 +151,7 @@ public class MeetingsController {
         return null;
     }
 
-    @GetMapping(value = "futureMeetingsByUser/")
+    @GetMapping(value = "futureMeetingsByUser")
     public List<Meeting> getFutureMeetingsForUser(@RequestParam String userID, HttpSession session) {
         String userID1 = (String) session.getAttribute("userID");
 
@@ -159,7 +162,7 @@ public class MeetingsController {
         return null;
     }
 
-    @PutMapping("changeParticipantStatus/")
+    @PutMapping("changeParticipantStatus")
     public MeetingParticipant changeParticipantStatus(@RequestParam Long partisipantID,
                                                       @RequestParam ParticipantStatus participantStatus, HttpSession session) {
         String userID = (String) session.getAttribute("userID");

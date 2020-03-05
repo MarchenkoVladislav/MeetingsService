@@ -20,7 +20,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="#" id="meetings-management">Meetings management</a>
+            <a class="nav-link" href="#" id="meetings-management">All my meetings</a>
         </li>
 
         <li class="nav-item">
@@ -47,20 +47,76 @@
 </nav>
 
 <div class="container">
-    <div class="row-md-auto">
-        <div class="col-md-auto" id="hint">
+    <div class="row-md-auto" id="hint">
+        <div class="col-md-auto">
             <h4 class="c-h">Rules for working with the service</h4>
             <p class="text-center">1. To use the service, you must sign in via Google. To do this, there is a button in the right corner of the navigation bar.</p>
             <p class="text-center">2. When you click on a brand, you will be returned to this hint.</p>
             <p class="text-center">3. The "Create meeting" tab is used to add your own meetings.</p>
-            <p class="text-center">4. The "Meetings management" tab is used to view all meetings.</p>
+            <p class="text-center">4. The "All my meetings" tab is used to view all meetings.</p>
             <p class="text-center">5. The "Current meetings " tab is used for editing current meetings.</p>
             <p class="text-center">6. To sign out, click the button in the right corner again.</p>
+        </div>
+    </div>
+    <div class="row-md-auto" id="new-meet">
+        <div class="col-md-auto">
+            <form id="jsMaster" class="needs-validation" novalidate enctype="multipart/form-data"
+                  action="/">
+                <div class="row-md-auto">
+                    <div class="col-md-8  mt-2 ">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Start date dd.MM.yy HH:mm"
+                                   aria-describedby="basic-addon2"
+                                   id="startDate" name="startDate">
+                            <div class="invalid-feedback">
+                                Please choose a start date.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-md-auto">
+                    <div class="col-md-8  mt-2 ">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="End date dd.MM.yy HH:mm"
+                                   aria-describedby="basic-addon2"
+                                   id="endDate" name="endDate">
+                            <div class="invalid-feedback">
+                                Please choose an end date.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-md-auto">
+                    <div class="col-md-8  mt-2 ">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="Description of meeting"
+                                   aria-describedby="basic-addon2"
+                                   id="description" name="description"
+                                   pattern="[A-Za-zА-Яа-я0-9][A-Za-zА-Яа-я0-9 -,!?)(=.;]+" required minlength="20" maxlength="500">
+                            <div class="invalid-feedback">
+                                Please choose a description of meeting
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row-md-auto">
+                    <div class="col-md-8  mt-2">
+                        <button type="button" id="addMeet" class="btn btn-primary"
+                                onclick="writeMeetInDB()">
+                            Add meeting
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
 
 <script th:inline="javascript">
+    $('#new-meet').css("display", "none");
     let signInData = [[${signInData}]];
     $('#userName').text(signInData.user.userName);
 </script>

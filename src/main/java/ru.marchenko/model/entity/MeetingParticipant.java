@@ -1,7 +1,9 @@
 package ru.marchenko.model.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import ru.marchenko.model.enums.ParticipantRole;
 import ru.marchenko.model.enums.ParticipantStatus;
 
@@ -10,7 +12,8 @@ import javax.persistence.*;
 /**
  * @author Vladislav Marchenko
  */
-@Data
+@Setter
+@Getter
 @NoArgsConstructor
 @Entity
 @Table(name = "meetings_participants")
@@ -22,16 +25,20 @@ public class MeetingParticipant {
 
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(columnDefinition = "bigint", nullable = false, name = "meeting_id")
+    @JsonIgnore
     private Meeting meetingID;
 
     @ManyToOne(cascade= CascadeType.ALL)
     @JoinColumn(columnDefinition = "character varying (255)", nullable = false, name = "user_id")
+    @JsonIgnore
     private User userID;
 
     @Column(columnDefinition = "character varying (20)", nullable = false,name = "participant_status")
+    @Enumerated(EnumType.STRING)
     private ParticipantStatus participantStatus;
 
     @Column(columnDefinition = "character varying (20)", nullable = false,name = "participant_role")
+    @Enumerated(EnumType.STRING)
     private ParticipantRole participantRole;
 
     public MeetingParticipant(Meeting meetingID, User userID, ParticipantRole participantRole) {

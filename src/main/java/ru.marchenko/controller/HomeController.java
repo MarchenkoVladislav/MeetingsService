@@ -14,10 +14,9 @@ import java.util.Map;
  * @author Vladislav Marchenko
  */
 @Controller
-@RequestMapping("/")
 public class HomeController {
 
-    @GetMapping(value = "")
+    @GetMapping("/")
     public String getHomePage(Model model , @AuthenticationPrincipal User user){
         Map<String, Object> data = new HashMap<>();
 
