@@ -15,7 +15,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "meetings", schema = "meetings")
+@Table(name = "meetings")
 public class Meeting {
     @Id
     @Column(columnDefinition = "bigint", nullable = false, name = "meeting_id")

@@ -9,4 +9,5 @@ import ru.marchenko.model.entity.User;
  */
 @Repository
 public interface UsersRepo extends JpaRepository<User, String> {
+    User findUserByEmail(String email);
 }

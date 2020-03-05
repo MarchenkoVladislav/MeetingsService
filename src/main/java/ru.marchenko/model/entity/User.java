@@ -13,7 +13,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "users", schema = "meetings")
+@Table(name = "users")
 public class User {
     @Id
     @Column(columnDefinition = "character varying (255)", nullable = false, name = "user_id")

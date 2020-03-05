@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "meetings_participants", schema = "meetings")
+@Table(name = "meetings_participants")
 public class MeetingParticipant {
     @Id
     @Column(columnDefinition = "bigint", nullable = false, name = "participant_id")

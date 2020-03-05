@@ -43,7 +43,8 @@ public interface MeetingsRepo extends JpaRepository<Meeting, Long> {
             "where meetings_participants.user_id = :user2", nativeQuery = true)
     List<Meeting> findMeetingsByTwoUsers(User user1, User user2);
 
-    @Query(value = "select * from meetings where year(meetings.start_time) = year(:date) " +
-            "and month(meetings.start_time) = month(:date) and day(meetings.start_time) = day(:date)", nativeQuery = true)
-    List<Meeting> findMeetingsByDate(Date date);
+    @Query(value = "select * from meetings where date_part('year', meetings.start_time) = date_part('year', now()) " +
+            "and date_part('month', meetings.start_time) = date_part('month', now()) " +
+            "and date_part('day', meetings.start_time) = date_part('day', now())", nativeQuery = true)
+    List<Meeting> findMeetingsByDate();
 }

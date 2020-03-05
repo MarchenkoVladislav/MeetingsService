@@ -79,8 +79,8 @@ public class MeetingsService {
         return meetingsRepo.findMeetingsByTwoUsers(user1, user2);
     }
 
-    public List<Meeting> getMeetingsByDate(Date date) {
-        return meetingsRepo.findMeetingsByDate(date);
+    public List<Meeting> getMeetingsByDate() {
+        return meetingsRepo.findMeetingsByDate();
     }
 
     public boolean isValidMeetingInfo(Date startTime, Date endTime, String description) {

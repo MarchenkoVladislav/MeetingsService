@@ -57,7 +57,7 @@ public class MeetingsController {
 
     @PutMapping(value = "cancel/{meetingID}")
     public Meeting cancelMeeting(HttpSession session, @PathVariable Long meetingID) {
-       String userId = (String) session.getAttribute("userID");
+        String userId = (String) session.getAttribute("userID");
 
         Meeting meeting = meetingsService.getMitingByID(meetingID);
 
@@ -78,5 +78,26 @@ public class MeetingsController {
         }
        return null;
     }
+
+    @PutMapping(value = "addParticipant/")
+    public MeetingParticipant addParticipantToMeeting(HttpSession session, @RequestParam Long meetingID, @RequestParam String userID,
+                                           @RequestParam ParticipantRole participantRole) {
+        String userID1 = (String) session.getAttribute("userID");
+
+        Meeting meeting = meetingsService.getMitingByID(meetingID);
+
+        if (userID1 != null && meeting != null) {
+            User user= usersService.getUserByID(userID);
+            if (!meetingParticipantsService.participantIsBisy(meeting, user)) {
+                emailsService.send(user.getEmail(), "Meeting invitation", "You are invented to this meeting\n" +
+                        meeting.getDescription());
+                return meetingParticipantsService.addParticipantToMeeting(meeting, user, participantRole);
+            }
+            return null;
+        }
+        return null;
+    }
+
+    
 
 }

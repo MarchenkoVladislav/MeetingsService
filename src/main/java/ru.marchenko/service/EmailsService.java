@@ -8,6 +8,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import ru.marchenko.model.entity.Meeting;
 import ru.marchenko.model.entity.MeetingParticipant;
+import ru.marchenko.model.enums.MeetingStatus;
 import ru.marchenko.model.repository.MeetingsRepo;
 
 import java.util.Date;
@@ -45,19 +46,23 @@ public class EmailsService {
         mailSender.send(mailMessage);
     }
 
-    @Scheduled(fixedRate = 60000)
+    @Scheduled(initialDelay = 10000, fixedRate = 60000)
     public void scheduledSend() {
         Date curDate = new Date();
 
-        List<Meeting> meetings = meetingsRepo.findMeetingsByDate(curDate);
+        List<Meeting> meetings = meetingsRepo.findMeetingsByDate();
 
         for(Meeting m: meetings) {
             long deltaTime = m.getStartTime().getTime() - curDate.getTime();
-            if (deltaTime >= minNotificationTime && deltaTime <= maxNotificationTime) {
+            if (deltaTime >= minNotificationTime && deltaTime <= maxNotificationTime && m.getMeetingStatus().toString().equals("EXPECTED")) {
                 for (MeetingParticipant mp: m.getMeetingParticipants()) {
                     send(mp.getUserID().getEmail(), "Meeting notification", "This meeting will be though 15 min:\n" +
                             m.getDescription());
                 }
+            }
+            if (m.getEndTime().after(curDate) && m.getMeetingStatus().toString().equals("EXPECTED")) {
+                m.setMeetingStatus(MeetingStatus.WAS_HELD);
+                meetingsRepo.save(m);
             }
         }
     }

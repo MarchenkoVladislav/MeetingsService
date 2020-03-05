@@ -21,8 +21,8 @@ public class MeetingParticipantsService {
     @Autowired
     private MeetingParticipantsRepo meetingParticipantsRepo;
 
-    public void addParticipantToMeeting(Meeting meetingID, User userID, ParticipantRole participantRole) {
-        meetingParticipantsRepo.save(new MeetingParticipant(meetingID, userID, participantRole));
+    public MeetingParticipant addParticipantToMeeting(Meeting meetingID, User userID, ParticipantRole participantRole) {
+        return meetingParticipantsRepo.save(new MeetingParticipant(meetingID, userID, participantRole));
     }
 
     public void deleteParticipantFromMeeting(MeetingParticipant meetingParticipant) {
