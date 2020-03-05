@@ -58,6 +58,11 @@
             <p class="text-center">6. To sign out, click the button in the right corner again.</p>
         </div>
     </div>
+    <div class="row-md-auto" id="all-meet">
+        <div class="col-md-auto">
+            <div class="scroll" id="meets"></div>
+        </div>
+    </div>
     <div class="row-md-auto" id="new-meet">
         <div class="col-md-auto">
             <form id="jsMaster" class="needs-validation" novalidate enctype="multipart/form-data"
@@ -117,6 +122,7 @@
 
 <script th:inline="javascript">
     $('#new-meet').css("display", "none");
+    $('#all-meet').css("display", "none");
     let signInData = [[${signInData}]];
     $('#userName').text(signInData.user.userName);
 </script>

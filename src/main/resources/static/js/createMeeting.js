@@ -1,6 +1,7 @@
 $('#create-meeting').on('click', function () {
     $('#hint').css("display", "none");
     $('#new-meet').css("display", "block");
+    $('#all-meet').css("display", "none");
 });
 
 function writeMeetInDB() {

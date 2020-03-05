@@ -13,3 +13,14 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.scroll {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height:300px;
+    width: 400px;
+    background: #fff;
+    border: 1px solid #C1C1C1;
+    overflow-y: scroll;
+}

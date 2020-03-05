@@ -140,8 +140,8 @@ public class MeetingsController {
         return null;
     }
 
-    @GetMapping(value = "allMeetingsByUser")
-    public List<Meeting> getMeetingsByUser(@RequestParam String userID, HttpSession session) {
+    @GetMapping(value = "allMeetingsByUser/{userID}")
+    public List<Meeting> getMeetingsByUser(@PathVariable String userID, HttpSession session) {
         String userID1 = (String) session.getAttribute("userID");
 
         if (userID1 != null) {
