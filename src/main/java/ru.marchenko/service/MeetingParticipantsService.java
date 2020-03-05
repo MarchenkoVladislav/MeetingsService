@@ -29,10 +29,10 @@ public class MeetingParticipantsService {
         meetingParticipantsRepo.delete(meetingParticipant);
     }
 
-    public void changeParticipantStatus(MeetingParticipant meetingParticipant, ParticipantStatus participantStatus) {
+    public MeetingParticipant changeParticipantStatus(MeetingParticipant meetingParticipant, ParticipantStatus participantStatus) {
         MeetingParticipant meetingParticipant1 = meetingParticipantsRepo.getOne(meetingParticipant.getParticipantID());
         meetingParticipant1.setParticipantStatus(participantStatus);
-        meetingParticipantsRepo.save(meetingParticipant1);
+        return meetingParticipantsRepo.save(meetingParticipant1);
     }
 
     public MeetingParticipant getParticipantByID(Long participantID) {

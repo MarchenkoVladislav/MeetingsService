@@ -1,10 +1,12 @@
 package ru.marchenko.model.entity;
 
+import freemarker.template.SimpleDate;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.marchenko.model.enums.MeetingStatus;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;

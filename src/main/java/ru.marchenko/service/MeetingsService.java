@@ -48,6 +48,10 @@ public class MeetingsService {
         return meetingsRepo.save(meeting1);
     }
 
+    public List<Meeting> getMeetingsByUserAndRole(User user, ParticipantRole participantRole) {
+        return meetingsRepo.findMeetingsByUserAndRole(user, participantRole);
+    }
+
     public void deleteMeeting(Meeting meeting) {
         meetingsRepo.delete(meeting);
     }
@@ -63,24 +67,8 @@ public class MeetingsService {
         return meetingsRepo.findMeetingsByUser(user);
     }
 
-    public List<Meeting> getMeetingsByUserAndRole(User user, ParticipantRole participantRole) {
-        return meetingsRepo.findMeetingsByUserAndRole(user, participantRole);
-    }
-
-    public List<Meeting> getMeetingsByUserAndStatus(User user, ParticipantStatus participantStatus) {
-        return meetingsRepo.findMeetingsByUserAndStatus(user, participantStatus);
-    }
-
-    public List<Meeting> getMeetingsByUserAndRoleAndStatus(User user, ParticipantRole participantRole, ParticipantStatus participantStatus) {
-        return meetingsRepo.findMeetingsByUserAndRoleAndStatus(user, participantRole, participantStatus);
-    }
-
-    public List<Meeting> getMeetingsByTwoUsers(User user1, User user2) {
-        return meetingsRepo.findMeetingsByTwoUsers(user1, user2);
-    }
-
-    public List<Meeting> getMeetingsByDate() {
-        return meetingsRepo.findMeetingsByDate();
+    public List<Meeting> getFutureMeetingsForUser(User user) {
+        return meetingsRepo.findFutureMeetingsForUser(user);
     }
 
     public boolean isValidMeetingInfo(Date startTime, Date endTime, String description) {

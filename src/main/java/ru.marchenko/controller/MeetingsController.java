@@ -7,6 +7,7 @@ import ru.marchenko.model.entity.MeetingParticipant;
 import ru.marchenko.model.entity.User;
 import ru.marchenko.model.enums.MeetingStatus;
 import ru.marchenko.model.enums.ParticipantRole;
+import ru.marchenko.model.enums.ParticipantStatus;
 import ru.marchenko.service.EmailsService;
 import ru.marchenko.service.MeetingParticipantsService;
 import ru.marchenko.service.MeetingsService;
@@ -14,6 +15,7 @@ import ru.marchenko.service.UsersService;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Vladislav Marchenko
@@ -116,6 +118,58 @@ public class MeetingsController {
         return null;
     }
 
+    @DeleteMapping(value = "deleteMeeting/{meetingID}")
+    public Meeting deleteMeeting(@PathVariable Long meetingID, HttpSession session) {
 
+        String userID = (String) session.getAttribute("userID");
 
+        if (userID != null) {
+            Meeting meeting = meetingsService.getMitingByID(meetingID);
+            User user = usersService.getUserByID(userID);
+
+            if (meeting != null && meetingsService.getMeetingsByUserAndRole(user, ParticipantRole.ORGANIZER).contains(meeting)) {
+                meetingsService.deleteMeeting(meeting);
+                return meeting;
+            }
+
+            return null;
+        }
+        return null;
+    }
+
+    @GetMapping(value = "allMeetingsByUser/")
+    public List<Meeting> getMeetingsByUser(@RequestParam String userID, HttpSession session) {
+        String userID1 = (String) session.getAttribute("userID");
+
+        if (userID1 != null) {
+            return meetingsService.getMeetingsByUser(usersService.getUserByID(userID));
+        }
+
+        return null;
+    }
+
+    @GetMapping(value = "futureMeetingsByUser/")
+    public List<Meeting> getFutureMeetingsForUser(@RequestParam String userID, HttpSession session) {
+        String userID1 = (String) session.getAttribute("userID");
+
+        if (userID1 != null) {
+            return meetingsService.getFutureMeetingsForUser(usersService.getUserByID(userID));
+        }
+
+        return null;
+    }
+
+    @PutMapping("changeParticipantStatus/")
+    public MeetingParticipant changeParticipantStatus(@RequestParam Long partisipantID,
+                                                      @RequestParam ParticipantStatus participantStatus, HttpSession session) {
+        String userID = (String) session.getAttribute("userID");
+
+        if (userID != null) {
+            MeetingParticipant meetingParticipant = meetingParticipantsService.getParticipantByID(partisipantID);
+
+            return meetingParticipantsService.changeParticipantStatus(meetingParticipant, participantStatus);
+        }
+
+        return null;
+    }
 }
