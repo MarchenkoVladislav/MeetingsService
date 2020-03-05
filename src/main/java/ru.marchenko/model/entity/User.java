@@ -1,5 +1,6 @@
 package ru.marchenko.model.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,6 +32,12 @@ public class User {
     private Set<MeetingParticipant> meetingParticipants = new HashSet<>();
 
     public User(String userName, String email) {
+        this.userName = userName;
+        this.email = email;
+    }
+
+    public User(String id, String userName, String email) {
+        this.userID = id;
         this.userName = userName;
         this.email = email;
     }

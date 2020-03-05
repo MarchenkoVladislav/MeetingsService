@@ -69,17 +69,7 @@ public class MeetingsController {
         if (userId != null && meeting != null) {
             User user = usersService.getUserByID(userId);
 
-            if (meetingParticipantsService.isMeetingOrganizer(user, meeting)) {
-                for (MeetingParticipant p: meeting.getMeetingParticipants()) {
-                    if (p.getParticipantRole().equals(ParticipantRole.SIMPLE_PARTICIPANT)) {
-                        emailsService.send(p.getUserID().getEmail(), "Canceling of meeting",
-                                "This meeting is canceled:\n" + p.getMeetingID().getDescription());
-                    }
-                }
-
-                return meetingsService.changeMeetingStatus(meetingID, MeetingStatus.CANCELED);
-            }
-            return null;
+            return meetingsService.cancelMeeting(user, meeting);
         }
        return null;
     }

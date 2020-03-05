@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.marchenko.model.entity.Meeting;
+import ru.marchenko.model.entity.MeetingParticipant;
 import ru.marchenko.model.entity.User;
 import ru.marchenko.model.enums.MeetingStatus;
 import ru.marchenko.model.enums.ParticipantRole;
@@ -32,6 +33,12 @@ public class MeetingsService {
 
     @Value("${millisec.into.days}")
     private int millisecIntoDaysKoef;
+
+    @Autowired
+    private MeetingParticipantsService meetingParticipantsService;
+
+    @Autowired
+    private EmailsService emailsService;
 
     public Meeting saveOrUpdateMeeting(Meeting meeting) {
         return meetingsRepo.save(meeting);
@@ -88,5 +95,19 @@ public class MeetingsService {
         }
 
         return  true;
+    }
+
+    public Meeting cancelMeeting(User user, Meeting meeting) {
+        if (meetingParticipantsService.isMeetingOrganizer(user, meeting)) {
+            for (MeetingParticipant p: meeting.getMeetingParticipants()) {
+                if (p.getParticipantRole().equals(ParticipantRole.SIMPLE_PARTICIPANT)) {
+                    emailsService.send(p.getUserID().getEmail(), "Canceling of meeting",
+                            "This meeting is canceled:\n" + p.getMeetingID().getDescription());
+                }
+            }
+
+            return changeMeetingStatus(meeting.getMeetingID(), MeetingStatus.CANCELED);
+        }
+        return null;
     }
 }
