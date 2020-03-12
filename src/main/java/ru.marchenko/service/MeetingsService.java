@@ -78,7 +78,7 @@ public class MeetingsService {
     }
 
     public boolean isValidMeetingInfo(Date startTime, Date endTime, String description) {
-        int daysInt = (int)(endTime.getTime() - startTime.getTime()) / millisecIntoDaysKoef;
+        int daysInt = (int)((endTime.getTime() - startTime.getTime()) / millisecIntoDaysKoef);
 
         if (startTime.after(endTime) || (daysInt > validDaysInterval)
                 || (description.length() > validDescrLenMax) || (description.length() < validDescrLenMin)) {
