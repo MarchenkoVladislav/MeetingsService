@@ -1,2 +1,2 @@
 # MeetingsService
-REST API for meetings management
+Тестовое задание
