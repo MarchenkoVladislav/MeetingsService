@@ -1,2 +1,2 @@
 # MeetingsService
-Тестовое задание
+Test task. REST API Service.
